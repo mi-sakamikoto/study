@@ -6,9 +6,7 @@ package work001;
  */
 public class Account {
 	/** 属性 */
-	/**
-	 * 账户号码
-	 */
+	/** 账户号码 */
 	private long id;
 	/**
 	 * 账户密码

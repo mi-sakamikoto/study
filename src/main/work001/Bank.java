@@ -7,9 +7,8 @@ import java.util.Scanner;
  * @author FYB
  */
 public class Bank {
-	private work001.Account Account;
+
 	static Account[] users = new Account[10];
-	static Account account = new Account();
 	int num = 0;
 
 	/**
@@ -33,6 +32,7 @@ public class Bank {
 			System.out.println("确认密码错误,重新开户");
 			//create(id,password,repassword,name,personId,idType);
 		}else {
+			// TODO
 			account.setId(id);
 			account.setPassword(password);
 			account.setName(name);
@@ -48,7 +48,7 @@ public class Bank {
 	 * @return Account对象
 	 */
 	public Account login(){
-
+		// TODO
 		return Account;
 	}
 
