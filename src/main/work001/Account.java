@@ -2,12 +2,13 @@ package work001;
 
 /**
  * 账户类
+ *
  * @author FYB
  */
 public class Account {
-	/** 属性 */
+
 	/** 账户号码 */
-	private long id;
+	private static long id = 100000;
 	/** 账户密码 */
 	private String password;
 	/** 真实姓名 */
@@ -18,24 +19,28 @@ public class Account {
 	private String idType;
 	/** 账户余额 */
 	private double balance;
+
 	/**
 	 * 无参构造
 	 */
 	public Account() {
 	}
+
 	/**
 	 * 有参构造
 	 */
-	public Account(long id, String password, String name, String personId, String idType, double balance) {
-		this.id = id;
+	public Account(String password, String name, String personId, String idType, double balance) {
+		id += 1;
 		this.password = password;
 		this.name = name;
 		this.personId = personId;
 		this.idType = idType;
 		this.balance = balance;
 	}
+
 	/**
 	 * 只含balance构造
+	 *
 	 * @param balance 余额
 	 */
 	public Account(double balance) {
@@ -44,6 +49,7 @@ public class Account {
 
 	/**
 	 * 存款
+	 *
 	 * @param depositNum 存款金额
 	 */
 	public void deposit(double depositNum) {
@@ -53,6 +59,7 @@ public class Account {
 
 	/**
 	 * 取款
+	 *
 	 * @param withdrawNum 取款金额
 	 */
 	public void withdraw(double withdrawNum) {
@@ -69,8 +76,13 @@ public class Account {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	/**
+	 * TODO
+	 *
+	 * @return
+	 */
+	public void createNextId() {
+		id += 1;
 	}
 
 	public String getIdType() {

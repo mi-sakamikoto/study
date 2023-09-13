@@ -5,9 +5,8 @@ package work001;
  * @author FYB
  */
 public class Bank {
-	static Account[] users = new Account[10];
-	static int num = 0;
-	public static long id = 100000;
+	private Account[] users = new Account[10];
+	private int num = 0;
 
 	/**
 	 * 用户开户
@@ -20,7 +19,7 @@ public class Bank {
 			System.out.println("确认密码错误,重新开户");
 		}else {
 			account = new Account();
-			account.setId(id++);
+			account.createNextId();
 			System.out.println(account.getId());
 			account.setPassword(password);
 			account.setName(name);
@@ -28,7 +27,7 @@ public class Bank {
 			account.setIdType(idType);
 			users[num] = account;
 			num++;
-			System.out.println("开户成功");
+
 		}
 		return account;
 	}
@@ -38,12 +37,15 @@ public class Bank {
 	 * @return Account对象
 	 */
 	public Account login(Long id,String password){
+		// TODO
 		Account account = new Account();
 		boolean flag = true;
 		while (flag){
+			// TODO 遍历数组
 			for (int i = 0; i < num; i++){
 				//判断用户id与用户密码
 				if (id == users[i].getId() && password.equals(users[i].getPassword())){
+					// TODO 返回当前登录的Account对象
 					System.out.println("登录成功");
 					flag = false;
 				}
@@ -61,12 +63,14 @@ public class Bank {
 	 */
 	public Account deposit(Long id,double deposit){
 		double money = 0.0;
+		// TODO 针对当前用户存款
 		Account account = new Account();
 		boolean flag = true;
 		while (flag){
 			for (int i = 0; i < num; i++){
 				//判断用户id
 				if (id == users[i].getId()){
+					// TODO 调用Account存款方法
 					money = users[i].getBalance() + deposit;
 					users[i].setBalance(money);
 					System.out.println("存款成功，余额为:" + users[i].getBalance());
@@ -87,12 +91,14 @@ public class Bank {
 	 */
 	public Account withdrawNum(Long id,double withdrawNum){
 		double money = 0.0;
+		// TODO
 		Account account = new Account();
 		boolean flag = true;
 		while (flag){
 			for (int i = 0; i < num; i++){
 				//判断用户id
 				if (id == users[i].getId()){
+					// TODO
 					money = users[i].getBalance() - withdrawNum;
 					//判断余额是否大于0
 					if (money > 0){
