@@ -8,27 +8,62 @@ public class Account {
 	/** 属性 */
 	/** 账户号码 */
 	private long id;
-	/**
-	 * 账户密码
-	 */
+	/** 账户密码 */
 	private String password;
-	/**
-	 * 真实姓名
-	 */
+	/** 真实姓名 */
 	private String name;
-	/**
-	 * 身份证号码
-	 */
+	/** 身份证号码 */
 	private String personId;
+	/** 类型 */
+	private String idType;
+	/** 账户余额 */
+	private double balance;
+	/**
+	 * 无参构造
+	 */
+	public Account() {
+	}
+	/**
+	 * 有参构造
+	 */
+	public Account(long id, String password, String name, String personId, String idType, double balance) {
+		this.id = id;
+		this.password = password;
+		this.name = name;
+		this.personId = personId;
+		this.idType = idType;
+		this.balance = balance;
+	}
+	/**
+	 * 只含balance构造
+	 * @param balance 余额
+	 */
+	public Account(double balance) {
+		this.balance = balance;
+	}
 
 	/**
-	 * 类型
+	 * 存款
+	 * @param depositNum 存款金额
 	 */
-	private String idType;
+	public void deposit(double depositNum) {
+		double money = balance + depositNum;
+		this.setBalance(money);
+	}
+
 	/**
-	 * 账户余额
+	 * 取款
+	 * @param withdrawNum 取款金额
 	 */
-	private double balance;
+	public void withdraw(double withdrawNum) {
+		double money = balance - withdrawNum;
+		//判断余额是否大于0
+		if (money >= 0) {
+			this.setBalance(money);
+		} else {
+			System.out.print("余额不足，");
+		}
+	}
 
 	public long getId() {
 		return id;
@@ -76,53 +111,5 @@ public class Account {
 
 	public void setBalance(double balance) {
 		this.balance = balance;
-	}
-
-	/**
-	 * 无参构造
-	 */
-	public Account() {
-	}
-
-	/**
-	 * 有参构造
-	 */
-	public Account(long id, String password, String name, String personId, String idType, double balance) {
-		this.id = id;
-		this.password = password;
-		this.name = name;
-		this.personId = personId;
-		this.idType = idType;
-		this.balance = balance;
-	}
-
-	/**
-	 * 只含balance构造
-	 * @param balance 余额
-	 */
-	public Account(double balance) {
-		this.balance = balance;
-	}
-
-	/**
-	 * 存款
-	 * @param depositNum 存款金额
-	 */
-	public void deposit(double depositNum) {
-		double money = balance + depositNum;
-		this.setBalance(money);
-	}
-
-	/**
-	 * 取款
-	 * @param withdrawNum 取款金额
-	 */
-	public void withdraw(double withdrawNum) {
-		double money = balance - withdrawNum;
-		if (money >= 0) {
-			this.setBalance(money);
-		} else {
-			System.out.print("余额不足，");
-		}
 	}
 }
