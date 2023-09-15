@@ -54,8 +54,8 @@ public class Account {
 	 */
 	public void deposit(double depositNum) {
 		double money = balance + depositNum;
-		System.out.println("存款成功,余额为:" + this.getBalance());
 		this.setBalance(money);
+		System.out.println("存款成功,余额为:" + this.getBalance());
 	}
 
 	/**
@@ -68,8 +68,9 @@ public class Account {
 		//判断余额是否大于0
 		if (money >= 0) {
 			this.setBalance(money);
+			System.out.println("取款成功,余额为:" + this.getBalance());
 		} else {
-			System.out.print("余额不足，余额为:" + this.getBalance());
+			System.out.println("余额不足，余额为:" + this.getBalance());
 		}
 	}
 

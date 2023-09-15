@@ -45,12 +45,15 @@ public class BankTest {
 					String password2 = sc.nextLine();
 					Account account = bank.login(id, password2);
 
-					while (true) {
-						if (account != null) {
-							System.out.println("欢迎" + account.getName() + ",账户号码:" + account.getId());
-							System.out.println("           c、存款");
-							System.out.println("           d、取款");
-							System.out.println("           e、退出");
+
+					if (account != null) {
+						System.out.println("欢迎" + account.getName() + ",账户号码:" + account.getId());
+						while (true) {
+							System.out.println("----------------");
+							System.out.println("     c、存款     ");
+							System.out.println("     d、取款     ");
+							System.out.println("     e、退出"     );
+							System.out.println("----------------");
 							System.out.println("          请输入选择：");
 							String choice2 = sc.nextLine();
 							switch (choice2) {
@@ -59,7 +62,7 @@ public class BankTest {
 									System.out.println("请输入存款数额:");
 									Scanner sc2 = new Scanner(System.in);
 									double depositNum = sc2.nextDouble();
-									bank.deposit(account, depositNum);
+									account.deposit(depositNum);
 
 									break;
 								case "d":
@@ -67,12 +70,12 @@ public class BankTest {
 									System.out.println("请输入取款数额:");
 									Scanner sc3 = new Scanner(System.in);
 									double withdrawNum = sc3.nextDouble();
-									bank.withdraw(account, withdrawNum);
+									account.withdraw(withdrawNum);
 
 									break;
 								case "e":
-									//清空账户信息
-									account = null;
+									//退出
+									//返回上一级
 									break;
 								default:
 									System.out.println("输入错误");

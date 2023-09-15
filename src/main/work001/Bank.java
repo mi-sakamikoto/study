@@ -52,26 +52,27 @@ public class Bank {
 		return account;
 	}
 
-	/**
+/*	*//**
 	 * 用户存款
 	 *
 	 * @return Account 对象
-	 */
+	 *//*
 	public Account deposit(Account account,double depositNum) {
-		/*account.deposit(depositNum);*/
+		*//*account.deposit(depositNum);*//*
 		account.deposit(depositNum);
 		return account;
 	}
 
-	/**
+	*//**
 	 * 用户取款
 	 *
 	 * @return Account 对象
-	 */
+	 *//*
 	public Account withdraw(Account account, double withdrawNum) {
-		/*account.withdraw(withdrawNum)*/;
-		return null;
-	}
+		*//*account.withdraw(withdrawNum)*//*;
+		account.withdraw(withdrawNum);
+		return account;
+	}*/
 
 	/**
 	 * 计算所有用户的余额
