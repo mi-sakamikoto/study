@@ -8,7 +8,8 @@ package work001;
 public class Account {
 
 	/** 账户号码 */
-	private static long id = 100000;
+	private long id;
+	private static long number = 0;
 	/** 账户密码 */
 	private String password;
 	/** 真实姓名 */
@@ -29,13 +30,12 @@ public class Account {
 	/**
 	 * 有参构造
 	 */
-	public Account(String password, String name, String personId, String idType, double balance) {
-		id += 1;
+	public Account(String password, String name, String personId, String idType) {
+		id = createNextId();
 		this.password = password;
 		this.name = name;
 		this.personId = personId;
 		this.idType = idType;
-		this.balance = balance;
 	}
 
 	/**
@@ -54,6 +54,7 @@ public class Account {
 	 */
 	public void deposit(double depositNum) {
 		double money = balance + depositNum;
+		System.out.println("存款成功,余额为:" + this.getBalance());
 		this.setBalance(money);
 	}
 
@@ -68,7 +69,7 @@ public class Account {
 		if (money >= 0) {
 			this.setBalance(money);
 		} else {
-			System.out.print("余额不足，");
+			System.out.print("余额不足，余额为:" + this.getBalance());
 		}
 	}
 
@@ -77,12 +78,13 @@ public class Account {
 	}
 
 	/**
-	 * TODO
+	 * number自增
 	 *
-	 * @return
+	 * @return number
 	 */
-	public void createNextId() {
-		id += 1;
+	private long createNextId() {
+		number += 1;
+		return number;
 	}
 
 	public String getIdType() {

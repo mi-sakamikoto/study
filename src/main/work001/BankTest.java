@@ -12,9 +12,6 @@ public class BankTest {
 			System.out.println("          系统功能：");
 			System.out.println("           a、开户");
 			System.out.println("           b、登录");
-			// TODO 登录之后，才能存取款
-			System.out.println("           c、存款");
-			System.out.println("           d、取款");
 			System.out.println("           e、退出");
 			System.out.println("          请输入选择：");
 			String choice = sc.nextLine();
@@ -31,7 +28,6 @@ public class BankTest {
 					String personId = sc.nextLine();
 					System.out.println("账户类型:");
 					String idType = sc.nextLine();
-
 					Account acc = bank.create(password, repassword, name, personId, idType);
 					if (acc != null) {
 						System.out.println("欢迎" + acc.getName() + ",开户成功, 账户号码:" + acc.getId());
@@ -42,31 +38,50 @@ public class BankTest {
 					break;
 				case "b":
 					// 登录
+					Scanner s = new Scanner(System.in);
 					System.out.println("请输入账户号码:");
-					Long id2 = sc.nextLong();
+					Long id = s.nextLong();
 					System.out.println("请输入账户密码:");
 					String password2 = sc.nextLine();
-					bank.login(id2, password2);
+					Account account = bank.login(id, password2);
 
-					break;
-				case "c":
-					// 存款
-					System.out.println("请输入账户号码:");
-					Long id3 = sc.nextLong();
-					System.out.println("请输入存款数额");
-					double deposit = sc.nextDouble();
-					bank.deposit(id3, deposit);
+					while (true) {
+						if (account != null) {
+							System.out.println("欢迎" + account.getName() + ",账户号码:" + account.getId());
+							System.out.println("           c、存款");
+							System.out.println("           d、取款");
+							System.out.println("           e、退出");
+							System.out.println("          请输入选择：");
+							String choice2 = sc.nextLine();
+							switch (choice2) {
+								case "c":
+									//存款
+									System.out.println("请输入存款数额:");
+									Scanner sc2 = new Scanner(System.in);
+									double depositNum = sc2.nextDouble();
+									bank.deposit(account, depositNum);
 
-					break;
-				case "d":
+									break;
+								case "d":
+									//取款
+									System.out.println("请输入取款数额:");
+									Scanner sc3 = new Scanner(System.in);
+									double withdrawNum = sc3.nextDouble();
+									bank.withdraw(account, withdrawNum);
 
-					System.out.println("请输入账户号码:");
-					Long id4 = sc.nextLong();
-					System.out.println("请输入取款数额");
-					double withdrawNum = sc.nextDouble();
-					bank.withdrawNum(id4, withdrawNum);
+									break;
+								case "e":
+									//清空账户信息
+									account = null;
+									break;
+								default:
+									System.out.println("输入错误");
+									break;
+							}
+						}
 
-					break;
+					}
+
 				case "e":
 					System.exit(0);
 				default:
@@ -74,5 +89,7 @@ public class BankTest {
 					break;
 			}
 		}
+
+
 	}
 }
