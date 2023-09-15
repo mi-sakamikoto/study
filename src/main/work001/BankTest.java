@@ -48,41 +48,7 @@ public class BankTest {
 
 					if (account != null) {
 						System.out.println("欢迎" + account.getName() + ",账户号码:" + account.getId());
-						while (true) {
-							System.out.println("----------------");
-							System.out.println("     c、存款     ");
-							System.out.println("     d、取款     ");
-							System.out.println("     e、退出"     );
-							System.out.println("----------------");
-							System.out.println("          请输入选择：");
-							String choice2 = sc.nextLine();
-							switch (choice2) {
-								case "c":
-									//存款
-									System.out.println("请输入存款数额:");
-									Scanner sc2 = new Scanner(System.in);
-									double depositNum = sc2.nextDouble();
-									account.deposit(depositNum);
-
-									break;
-								case "d":
-									//取款
-									System.out.println("请输入取款数额:");
-									Scanner sc3 = new Scanner(System.in);
-									double withdrawNum = sc3.nextDouble();
-									account.withdraw(withdrawNum);
-
-									break;
-								case "e":
-									//退出
-									//返回上一级
-									break;
-								default:
-									System.out.println("输入错误");
-									break;
-							}
-						}
-
+						menu2(account);
 					}
 
 				case "e":
@@ -94,5 +60,46 @@ public class BankTest {
 		}
 
 
+	}
+	public static void menu2(Account account){
+		Scanner sc = new Scanner(System.in);
+		while (true) {
+			System.out.println("----------------");
+			System.out.println("     c、存款     ");
+			System.out.println("     d、取款     ");
+			System.out.println("     e、取款     ");
+			System.out.println("     f、退出"     );
+			System.out.println("----------------");
+			System.out.println("          请输入选择：");
+			String choice2 = sc.nextLine();
+			switch (choice2) {
+				case "c":
+					//存款
+					System.out.println("请输入存款数额:");
+					Scanner sc2 = new Scanner(System.in);
+					double depositNum = sc2.nextDouble();
+					account.deposit(depositNum);
+
+					break;
+				case "d":
+					//取款
+					System.out.println("请输入取款数额:");
+					Scanner sc3 = new Scanner(System.in);
+					double withdrawNum = sc3.nextDouble();
+					account.withdraw(withdrawNum);
+
+					break;
+				case "e":
+					//查询余额
+
+				case "f":
+					//退出
+					return;
+
+				default:
+					System.out.println("输入错误");
+					break;
+			}
+		}
 	}
 }
