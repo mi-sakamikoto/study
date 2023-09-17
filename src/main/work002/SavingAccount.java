@@ -25,6 +25,7 @@ public class SavingAccount extends Account {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * 存款
 	 *
 	 */
@@ -32,6 +33,8 @@ public class SavingAccount extends Account {
 	}
 
 	/**
+=======
+>>>>>>> Zero/main
 	 * 取款
 	 *
 	 */
