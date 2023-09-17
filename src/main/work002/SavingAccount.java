@@ -25,13 +25,6 @@ public class SavingAccount extends Account {
 	}
 
 	/**
-	 * 存款
-	 *
-	 */
-	public void deposit() {
-	}
-
-	/**
 	 * 取款
 	 *
 	 */
