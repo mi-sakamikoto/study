@@ -20,32 +20,25 @@ public class CreditAccount extends Account {
 
 	/**
 	 * 有参构造
+	 *
 	 * @param password 密码
-	 * @param name 姓名
+	 * @param name     姓名
 	 * @param personId 身份证号
-	 * @param idType 类型
-	 * @param ceiled 已透支金额
 	 */
-	public CreditAccount(String password, String name, String personId, String idType, double balance, double ceiled) {
-		super(password, name, personId, idType, balance);
-		this.ceiled = ceiled;
+	public CreditAccount(String password, String name, String personId) {
+		super(password, name, personId);
 	}
 
-	/**
-	 * 存款
-	 */
-	public void deposit() {
-	}
 
 	/**
-	 * 取款
-	 * @param withdrawNum 取款金额
+	 * @inheritDoc
 	 */
-	public void withdraw(double withdrawNum){
+	@Override
+	public void withdraw(double withdrawNum) {
 		double ceilable = getCeiling() - getCeiled();
 		double money = getBalance() - withdrawNum;
 		//余额够用
-		if (money >= 0){
+		if (money >= 0) {
 			System.out.println("取款成功，剩余金额:" + money);
 			setBalance(money);
 		}
@@ -53,10 +46,10 @@ public class CreditAccount extends Account {
 		else {
 			double withdrawMoney = Math.abs(money); //透支的钱
 			//透支额度够用,判断第一次取款是否直接大于额度
-			if (withdrawMoney <= getCeiling() && withdrawMoney <= ceilable){
-				System.out.println("取款成功，透支金额:" + withdrawMoney);
+			if (withdrawMoney <= getCeiling() && withdrawMoney <= ceilable) {
+				System.out.println("取款成功，目前账户余额:0,透支金额:" + (withdrawMoney + getCeiled()));
 				setBalance(0.0);
-				setCeiled(withdrawMoney);
+				setCeiled(withdrawMoney + getCeiled());
 			}
 			//透支额度不够
 			else {
@@ -67,23 +60,23 @@ public class CreditAccount extends Account {
 
 
 	/**
-	 * 还款
+	 * 还透支款
 	 *
 	 * @param amount 还款金额
 	 */
+
 	public void payCeil(double amount) {
 		double money = amount - getCeiled();
 		//判断还完款后是否仍然欠款
 		if (money < 0) {
 			double amountMoney = Math.abs(money);
-			System.out.println("还款成功，目前透支金额:" + amountMoney);
+			System.out.println("还款成功，目前账户余额:" + getBalance() + "。透支金额:" + amountMoney);
 			setCeiled(amountMoney);
 		} else {
-			setBalance(money);
-			System.out.println("还款成功，剩余金额:" + getBalance());
+			System.out.println("还款成功，剩余金额:" + (getBalance() + money));
 			setCeiled(0.0);
+			setBalance((getBalance() + money));
 		}
-		setBalance(money);
 	}
 
 	/**

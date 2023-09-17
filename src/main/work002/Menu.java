@@ -27,8 +27,9 @@ public class Menu {
 					String name = sc.nextLine();
 					System.out.println("请输入身份证号码:");
 					String personId = sc.nextLine();
-					System.out.println("账户类型:");
-					String idType = sc.nextLine();
+					System.out.println("账户类型:0-储蓄账户 1-信用账户 2-可贷款储蓄帐号 3-可贷款信用账户");
+					Scanner sci = new Scanner(System.in);
+					int idType = sci.nextInt();
 					Account acc = bank.create(password, repassword, name, personId, idType);
 					if (acc != null) {
 						System.out.println("欢迎" + acc.getName() + ",开户成功, 账户号码:" + acc.getId());
@@ -45,8 +46,6 @@ public class Menu {
 					System.out.println("请输入账户密码:");
 					String password2 = sc.nextLine();
 					Account account = bank.login(id, password2);
-
-
 					if (account != null) {
 						System.out.println("欢迎" + account.getName() + ",账户号码:" + account.getId());
 						menu2(account);
@@ -56,12 +55,14 @@ public class Menu {
 				case "c":
 					//所有用户余额
 					System.out.println("所有用户余额为:" + bank.count());
+
 					break;
 				case "d":
 					//退出
 					System.exit(0);
 				default:
 					System.out.println("输入错误");
+
 					break;
 			}
 		}
@@ -76,7 +77,19 @@ public class Menu {
 			System.out.println("     c、存款     ");
 			System.out.println("     d、取款     ");
 			System.out.println("     e、查询余额   ");
-			System.out.println("     f、退出     ");
+			if (account instanceof CreditAccount) {
+				System.out.println("     g、还透支款   ");
+			}
+			if (account instanceof LoanSavingAccount) {
+				System.out.println("     h、贷款   ");
+				System.out.println("     i、还贷   ");
+				System.out.println("     j、贷款总额   ");
+			}
+			if (account instanceof LoanCreditAccount) {
+				System.out.println("     、   ");
+			}
+
+			System.out.println("     z、退出     ");
 			System.out.println("----------------");
 			System.out.println("          请输入选择：");
 			String choice2 = sc.nextLine();
@@ -102,7 +115,41 @@ public class Menu {
 					System.out.println("余额为:" + account.getBalance());
 
 					break;
-				case "f":
+				case "g":
+					//还透支款
+					System.out.println("请输入还透支款数额:");
+					Scanner sc4 = new Scanner(System.in);
+					double amount = sc4.nextDouble();
+					if (((CreditAccount) account) instanceof Account) {
+						((CreditAccount) account).payCeil(amount);
+					}
+
+					break;
+				case "h":
+					System.out.println("请输入贷款金额:");
+					Scanner sc5 = new Scanner(System.in);
+					double requsetLoanMonet = sc5.nextDouble();
+					if (((LoanSavingAccount) account) instanceof Account) {
+						((LoanSavingAccount) account).requsetLoan(requsetLoanMonet);
+					}
+
+					break;
+				case "i":
+					System.out.println("请输入还贷金额:");
+					Scanner sc6 = new Scanner(System.in);
+					double payLoanmoney = sc6.nextDouble();
+					if (((LoanSavingAccount) account) instanceof Account) {
+						((LoanSavingAccount) account).payLoan(payLoanmoney);
+					}
+
+					break;
+				case "j":
+					if (((LoanSavingAccount) account) instanceof Account) {
+						((LoanSavingAccount)account).getLoan();
+					}
+
+					break;
+				case "z":
 					//退出,返回上一级
 					return;
 

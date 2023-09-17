@@ -16,8 +16,6 @@ public abstract class Account {
 	private String name;
 	/** 身份证号码 */
 	private String personId;
-	/** 类型 */
-	private String idType;
 	/** 账户余额 */
 	private double balance;
 
@@ -30,13 +28,11 @@ public abstract class Account {
 	/**
 	 * 有参构造
 	 */
-	public Account(String password, String name, String personId, String idType, double balance) {
+	public Account(String password, String name, String personId) {
 		id = createNextId();
 		this.password = password;
 		this.name = name;
 		this.personId = personId;
-		this.idType = idType;
-		this.balance = balance;
 	}
 
 	/**
@@ -54,9 +50,8 @@ public abstract class Account {
 	 * @param depositNum 存款金额
 	 */
 	public final void deposit(double depositNum) {
-		double money = balance + depositNum;
-		this.setBalance(money);
-		System.out.println("存款成功,余额为:" + this.getBalance());
+		balance += depositNum;
+		System.out.println("存款成功,余额为:" + balance);
 	}
 
 	/**
@@ -80,13 +75,6 @@ public abstract class Account {
 		return number;
 	}
 
-	public String getIdType() {
-		return idType;
-	}
-
-	public void setIdType(String idType) {
-		this.idType = idType;
-	}
 
 	public String getPassword() {
 		return password;
@@ -119,4 +107,5 @@ public abstract class Account {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+
 }
