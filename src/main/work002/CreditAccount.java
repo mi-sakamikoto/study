@@ -46,7 +46,7 @@ public class CreditAccount extends Account {
 		else {
 			double withdrawMoney = Math.abs(money); //透支的钱
 			//透支额度够用,判断第一次取款是否直接大于额度
-			if (withdrawMoney <= getCeiling() && withdrawMoney <= ceilable) {
+			if (withdrawMoney <= (getCeiling() - getBalance()) && withdrawMoney <= ceilable) {
 				System.out.println("取款成功，目前账户余额:0,透支金额:" + (withdrawMoney + getCeiled()));
 				setBalance(0.0);
 				setCeiled(withdrawMoney + getCeiled());
@@ -73,9 +73,9 @@ public class CreditAccount extends Account {
 			System.out.println("还款成功，目前账户余额:" + getBalance() + "。透支金额:" + amountMoney);
 			setCeiled(amountMoney);
 		} else {
-			System.out.println("还款成功，剩余金额:" + (getBalance() + money));
 			setCeiled(0.0);
 			setBalance((getBalance() + money));
+			System.out.println("还款成功，剩余金额:" + getBalance());
 		}
 	}
 

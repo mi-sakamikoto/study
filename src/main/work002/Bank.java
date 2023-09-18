@@ -9,6 +9,18 @@ public class Bank {
 	private Account[] users = new Account[10];
 	private int num = 0;
 
+	double money = 0.0;
+
+	/**
+	 * 管理员的构造
+	 * @return
+	 */
+	//管理员也是account的一种，但是抽象无法实例化
+	public Account createAdmin(){
+		Account accountAdmin = null;
+
+		return accountAdmin;
+	}
 	/**
 	 * 用户开户
 	 * @param password 密码
@@ -47,10 +59,10 @@ public class Bank {
 
 					break;
 				case 3:
-					/*account = new LoanCreditAccount(password, name, personId);
+					account = new LoanCreditAccount(password, name, personId);
 					account.setPassword(password);
 					account.setName(name);
-					account.setPersonId(personId);*/
+					account.setPersonId(personId);
 
 					break;
 				default:
@@ -83,36 +95,51 @@ public class Bank {
 		return account;
 	}
 
-	/*	*//**
-	 * 用户存款
-	 *
-	 * @return Account 对象
-	 *//*
-	public Account deposit(Account account,double depositNum) {
-		*//*account.deposit(depositNum);*//*
-		account.deposit(depositNum);
-		return account;
-	}
-
-	*//**
-	 * 用户取款
-	 *
-	 * @return Account 对象
-	 *//*
-	public Account withdraw(Account account, double withdrawNum) {
-		*//*account.withdraw(withdrawNum)*//*;
-		account.withdraw(withdrawNum);
-		return account;
-	}*/
-
-
 	/**
 	 * 计算所有用户的余额
+	 * @return 总余额
 	 */
 	public double count() {
-		double money = 0.0;
 		for (int i = 0; i < num; i++) {
 			money += users[i].getBalance();
+		}
+		return money;
+	}
+
+	/**
+	 * 计算所有贷款金额
+	 * @return 贷款总金额
+	 */
+	public double countLoan(){
+		double allLoan1 = 0.0;
+		double allLoan2 = 0.0;
+		for (int i = 0; i < num; i++) {
+			if (users[i] instanceof LoanSavingAccount){
+				allLoan1 += ((LoanSavingAccount)users[i]).getLoanamount();
+			}
+			if (users[i] instanceof LoanCreditAccount){
+				allLoan2 += ((LoanCreditAccount)users[i]).getLoanamount();
+			}
+			money = allLoan1 + allLoan2;
+		}
+		return money;
+	}
+
+	/**
+	 * 计算所有透支金额
+	 * @return 透支总金额
+	 */
+	public double countceiled(){
+		double allLoan1 = 0.0;
+		double allLoan2 = 0.0;
+		for (int i = 0; i < num; i++) {
+			if (users[i] instanceof CreditAccount){
+				allLoan1 += ((CreditAccount)users[i]).getCeiled();
+			}
+			if (users[i] instanceof LoanCreditAccount){
+				allLoan2 = ((LoanCreditAccount)users[i]).getCeiled();
+			}
+			money = allLoan1 + allLoan2;
 		}
 		return money;
 	}

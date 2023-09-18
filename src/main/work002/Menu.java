@@ -13,6 +13,7 @@ public class Menu {
 			System.out.println("           a、开户");
 			System.out.println("           b、登录");
 			System.out.println("           c、所有用户余额");
+			//System.out.println("           e、管理员登录");
 			System.out.println("           d、退出");
 			System.out.println("          请输入选择：");
 			String choice = sc.nextLine();
@@ -54,9 +55,14 @@ public class Menu {
 					break;
 				case "c":
 					//所有用户余额
-					System.out.println("所有用户余额为:" + bank.count());
+					System.out.println("所有用户余额为:" + bank.countLoan());
 
 					break;
+				/*case "e":
+					//管理员
+					Account accountAdmin = bank.create(1,"admin");
+
+					break;*/
 				case "d":
 					//退出
 					System.exit(0);
@@ -86,7 +92,9 @@ public class Menu {
 				System.out.println("     j、贷款总额   ");
 			}
 			if (account instanceof LoanCreditAccount) {
-				System.out.println("     、   ");
+				System.out.println("     k、贷款   ");
+				System.out.println("     l、还贷   ");
+				System.out.println("     m、贷款总额   ");
 			}
 
 			System.out.println("     z、退出     ");
@@ -146,6 +154,30 @@ public class Menu {
 				case "j":
 					if (((LoanSavingAccount) account) instanceof Account) {
 						((LoanSavingAccount)account).getLoan();
+					}
+
+					break;
+				case "k":
+					System.out.println("请输入贷款金额:");
+					Scanner sc7 = new Scanner(System.in);
+					double requsetLoanMonet2 = sc7.nextDouble();
+					if (((LoanCreditAccount) account) instanceof Account) {
+						((LoanCreditAccount) account).requsetLoan(requsetLoanMonet2);
+					}
+
+					break;
+				case "l":
+					System.out.println("请输入还贷金额:");
+					Scanner sc8 = new Scanner(System.in);
+					double payLoanmoney2 = sc8.nextDouble();
+					if (((LoanCreditAccount) account) instanceof Account) {
+						((LoanCreditAccount) account).payLoan(payLoanmoney2);
+					}
+
+					break;
+				case "m":
+					if (((LoanCreditAccount) account) instanceof Account) {
+						((LoanCreditAccount)account).getLoan();
 					}
 
 					break;

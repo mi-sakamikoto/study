@@ -9,7 +9,7 @@ public abstract class Account {
 
 	/** 账户号码 */
 	private long id;
-	private static long number = 0;
+	private static long number = 10;
 	/** 账户密码 */
 	private String password;
 	/** 真实姓名 */
@@ -27,12 +27,26 @@ public abstract class Account {
 
 	/**
 	 * 有参构造
+	 * @param password 密码
+	 * @param name 姓名
+	 * @param personId 身份证号
 	 */
 	public Account(String password, String name, String personId) {
 		id = createNextId();
 		this.password = password;
 		this.name = name;
 		this.personId = personId;
+	}
+
+	/**
+	 * 管理员构造
+	 * @param id 账号号码
+	 * @param password 密码
+	 */
+	public Account(long id, String password){
+		this.id = id;
+		this.password = password;
+
 	}
 
 	/**

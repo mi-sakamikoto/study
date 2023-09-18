@@ -3,17 +3,11 @@ package work002;
 /**
  * 贷款信用账户类
  */
-public class LoanCreditAccount extends CreditAccount implements Loan{
+public class LoanCreditAccount extends CreditAccount implements Loan {
 
-	/** 贷款额度 */
-	//暂时设置为2000
-	private double loanable = 2000.0;
-	/** 还贷金额 */
-	private double repay;
 	/** 贷款金额 */
-	private double loanmoney;
+	private double loanamount;
 
-	static boolean flag = true;
 	/**
 	 * 无参构造
 	 */
@@ -22,96 +16,76 @@ public class LoanCreditAccount extends CreditAccount implements Loan{
 
 	/**
 	 * 有参构造
-	 * @param password 密码
-	 * @param name 姓名
-	 * @param personId 身份证号
-	 * @param idType 开户类型
-	 * @param balance 余额
-	 * @param ceiled 已透支金额
-	 * @param repay 还贷金额
-	 * @param loanmoney 贷款金额
 	 */
-	public LoanCreditAccount(String password, String name, String personId, String idType, double balance, double ceiled, double repay,double loanmoney) {
-		super(password, name, personId, idType, balance, ceiled);
-		//this.loanable = loanable;
-		this.repay = repay;
-		this.loanmoney = loanmoney;
+	public LoanCreditAccount(String password, String name, String personId) {
+		super(password, name, personId);
 	}
 
-
 	/**
-	 * 贷款
-	 * @param requsetLoanMonet 贷款金额
+	 * @inheritDoc 贷款
 	 */
 	@Override
 	public void requsetLoan(double requsetLoanMonet) {
-		//每个账号只能贷一次款，还完再贷
-		if (flag){
-			if (requsetLoanMonet <= loanable){
-				System.out.println("贷款成功，贷款金额:" + requsetLoanMonet);
-				setLoanmoney(requsetLoanMonet);
-				flag = false;
-			}
-			else {
-				System.out.println("超出贷款金额，最多贷款为:" + getLoanable());
-			}
-		}
-		else {
-			System.out.println("请先还款");
-		}
+		loanamount += requsetLoanMonet;
+		System.out.println("贷款成功，金额:" + loanamount + "。账户余额:" + getBalance());
 	}
 
 	/**
-	 * 还贷
-	 * @param repay 还贷金额
+	 * @inheritDoc 还贷
 	 */
-	///////////////////这方法有问题/////////////////////
 	@Override
-	public void payLoan(double repay) {
-		//剩余贷款金额
-		double remainMoney = loanmoney - repay;
-		//判断是否还完
-		if (remainMoney > 0){
-			System.out.println("剩余应还贷款为:" + remainMoney);
-			//从存款里挪钱
-			withdraw(repay);
-		} else if (remainMoney < 0) {
-			System.out.println("还款应金额为:" + loanmoney + "剩余存入账户");
-			withdraw(repay - loanmoney);
-			flag = false;
+	public void payLoan(double payLoanmoney) {
+		double ceilable = getCeiling() - getCeiled();
+		double money = payLoanmoney- loanamount;
+		double amountMoney = Math.abs(money);
+		//判断输入的还贷金额是否大于贷款金额(没还完)
+		if (money < 0){
+			//判断还的钱是否大于账户余额
+			if(payLoanmoney < getBalance()){
+				setBalance(getBalance() - payLoanmoney);
+				loanamount = amountMoney;
+				System.out.println("还贷成功，剩余贷款为:" + loanamount + "。账户剩余金额为:" + getBalance());
+				//还贷的钱大于账户余额，透支
+			} else if (payLoanmoney >= getBalance() &&  (payLoanmoney-getBalance()) <= ceilable){
+				loanamount = amountMoney;
+				setCeiled(payLoanmoney + getCeiled());
+				System.out.println("还贷成功，剩余贷款为:" + loanamount + "。账户余额为:0。透支金额为:" + (payLoanmoney - getBalance()));
+				setBalance(0.0);
+				//还贷的钱大于账户余额，大于最大透支额度
+			} else {
+				System.out.println("还贷失败，账户余额不足并且大于最大可透支额度");
+			}
+			//还贷金额大于贷款金额(还完了)
 		} else {
-			System.out.println("已还完贷款");
-			flag = true;
+			//判断还的钱是否大于账户余额
+			if(payLoanmoney <= getBalance()){
+				setBalance(getBalance() - loanamount);
+				loanamount = 0.0;
+				System.out.println("还贷成功。账户剩余金额为:" + getBalance());
+				//还贷的钱大于账户余额，透支
+			} else if (payLoanmoney > getBalance() &&  payLoanmoney <= ceilable){
+				System.out.println("还贷成功。账户余额为:0。透支金额为:" + (loanamount - getBalance()));
+				setCeiled(getCeiled() + loanamount -getBalance());
+				setBalance(0.0);
+				loanamount = 0.0;
+				//还贷的钱大于账户余额，大于最大透支额度
+			} else {
+				System.out.println("还贷失败，账户余额不足并且大于最大可透支额度");
+			}
 		}
 
 	}
 
 	@Override
 	public void getLoan() {
-
+		System.out.println("贷款总额为:" + loanamount);
 	}
 
-	public double getLoanable() {
-		return loanable;
+	public double getLoanamount() {
+		return loanamount;
 	}
 
-	/*public void setLoanable(double loanable) {
-		this.loanable = loanable;
-	}*/
-
-	public double getRepay() {
-		return repay;
-	}
-
-	public void setRepay(double repay) {
-		this.repay = repay;
-	}
-
-	public double getLoanmoney() {
-		return loanmoney;
-	}
-
-	public void setLoanmoney(double loanmoney) {
-		this.loanmoney = loanmoney;
+	public void setLoanamount(double loanamount) {
+		this.loanamount = loanamount;
 	}
 }

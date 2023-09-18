@@ -7,8 +7,6 @@ public class LoanSavingAccount extends SavingAccount implements Loan {
 
 	/** 贷款金额 */
 	private double loanamount;
-	/** 已还金额 */
-	private double repay;
 
 	/**
 	 * 无参构造
@@ -25,22 +23,6 @@ public class LoanSavingAccount extends SavingAccount implements Loan {
 	 */
 	public LoanSavingAccount(String password, String name, String personId) {
 		super(password, name, personId);
-	}
-
-	/**
-	 * 取款
-	 * @param withdrawNum 取款金额
-	 */
-	@Override
-	public void withdraw(double withdrawNum) {
-		double money = getBalance() - withdrawNum;
-		//判断余额是否大于0
-		if (money >= 0) {
-			setBalance(money);
-			System.out.println("取款成功,余额为:" + getBalance());
-		} else {
-			System.out.println("余额不足，余额为:" + getBalance());
-		}
 	}
 
 	/**
@@ -101,11 +83,4 @@ public class LoanSavingAccount extends SavingAccount implements Loan {
 		this.loanamount = loanamount;
 	}
 
-	public double getRepay() {
-		return repay;
-	}
-
-	public void setRepay(double repay) {
-		this.repay = repay;
-	}
 }
