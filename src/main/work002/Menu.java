@@ -13,7 +13,7 @@ public class Menu {
 			System.out.println("           a、开户");
 			System.out.println("           b、登录");
 			System.out.println("           c、所有用户余额");
-			//System.out.println("           e、管理员登录");
+			System.out.println("           e、管理员登录");
 			System.out.println("           d、退出");
 			System.out.println("          请输入选择：");
 			String choice = sc.nextLine();
@@ -59,8 +59,14 @@ public class Menu {
 
 					break;
 				/*case "e":
+					Scanner sa = new Scanner(System.in);
 					//管理员
-					Account accountAdmin = bank.create(1,"admin");
+					System.out.println("请输入账户号码:");
+					Long adminId = sa.nextLong();
+					System.out.println("请输入账户密码:");
+					String adminPassword = sc.nextLine();
+					Account accountAdmin = bank.login(adminId,adminPassword);
+					menu3((CreditAccount) accountAdmin);
 
 					break;*/
 				case "d":
@@ -188,6 +194,50 @@ public class Menu {
 				default:
 					System.out.println("输入错误");
 					break;
+			}
+		}
+	}
+
+	public static void menu3(CreditAccount account){
+		Scanner s = new Scanner(System.in);
+		while (true){
+			System.out.println("----------------");
+			System.out.println("     a、贷款     ");
+			System.out.println("     b、还贷     ");
+			System.out.println("     c、查询余额  ");
+			System.out.println("     d、贷款总额  ");
+			System.out.println("     e、透支总额  ");
+			System.out.println("     f、设置透支度");
+			System.out.println("     g、还透支款  ");
+			System.out.println("     z、退出     ");
+			String choice = s.nextLine();
+			switch (choice){
+				case "a":
+
+					break;
+				case "b":
+
+					break;
+				case "c":
+
+					break;
+				case "d":
+
+					break;
+				case "e":
+
+					break;
+				case "f":
+
+					break;
+				case "g":
+
+					break;
+				case "z":
+
+					break;
+				default:
+					System.out.println("");
 			}
 		}
 	}

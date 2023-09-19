@@ -95,6 +95,15 @@ public class Bank {
 		return account;
 	}
 
+	public Account login(long id,String password){
+		Account adminAcc = new CreditAccount(1,"admin");
+		if (id != 1 || password != "admin"){
+			System.out.println("密码错误");
+		}
+		System.out.println("管理员登陆成功");
+		return adminAcc;
+	}
+
 	/**
 	 * 计算所有用户的余额
 	 * @return 总余额

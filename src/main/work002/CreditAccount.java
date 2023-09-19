@@ -8,7 +8,7 @@ package work002;
 public class CreditAccount extends Account {
 	/** 可透支额度 */
 	//暂时设置为3000
-	private double ceiling = 3000.0;
+	private double ceiling = 3000;
 	/** 已透支额度 */
 	private double ceiled;
 
@@ -29,6 +29,14 @@ public class CreditAccount extends Account {
 		super(password, name, personId);
 	}
 
+	/**
+	 * 管理员构造
+	 * @param id 管理员id
+	 * @param password 管理员密码
+	 */
+	public CreditAccount(long id, String password) {
+		super(id, password);
+	}
 
 	/**
 	 * @inheritDoc
@@ -86,9 +94,9 @@ public class CreditAccount extends Account {
 		return ceiling;
 	}
 
-	/*public void setCeiling(double ceiling) {
+	public void setCeiling(double ceiling) {
 		this.ceiling = ceiling;
-	}*/
+	}
 
 	public double getCeiled() {
 		return ceiled;

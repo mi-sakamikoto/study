@@ -35,41 +35,42 @@ public class LoanCreditAccount extends CreditAccount implements Loan {
 	 */
 	@Override
 	public void payLoan(double payLoanmoney) {
-		double ceilable = getCeiling() - getCeiled();
-		double money = payLoanmoney- loanamount;
+		double ceilable = getCeiling() - getCeiled();  //还能再透支ceilable数额的钱
+		double money = payLoanmoney- loanamount;  //money是判断还贷，还没还完
 		double amountMoney = Math.abs(money);
-		//判断输入的还贷金额是否大于贷款金额(没还完)
 		if (money < 0){
-			//判断还的钱是否大于账户余额
+			//判断输入的还贷金额是否大于贷款金额(没还完)
 			if(payLoanmoney < getBalance()){
+				//判断还的钱是否大于账户余额
 				setBalance(getBalance() - payLoanmoney);
 				loanamount = amountMoney;
 				System.out.println("还贷成功，剩余贷款为:" + loanamount + "。账户剩余金额为:" + getBalance());
-				//还贷的钱大于账户余额，透支
 			} else if (payLoanmoney >= getBalance() &&  (payLoanmoney-getBalance()) <= ceilable){
+				//还贷的钱大于账户余额，透支
 				loanamount = amountMoney;
-				setCeiled(payLoanmoney + getCeiled());
-				System.out.println("还贷成功，剩余贷款为:" + loanamount + "。账户余额为:0。透支金额为:" + (payLoanmoney - getBalance()));
+				setCeiled(payLoanmoney - getBalance() + getCeiled());
 				setBalance(0.0);
-				//还贷的钱大于账户余额，大于最大透支额度
+				System.out.println("还贷成功，剩余贷款为:" + loanamount + "。账户余额为:0。透支金额为:" + getCeiled());
 			} else {
+				//还贷的钱大于账户余额，大于最大透支额度
 				System.out.println("还贷失败，账户余额不足并且大于最大可透支额度");
 			}
-			//还贷金额大于贷款金额(还完了)
 		} else {
-			//判断还的钱是否大于账户余额
+			//还贷金额大于贷款金额(还完了)
 			if(payLoanmoney <= getBalance()){
+				//判断还的钱是否大于账户余额
 				setBalance(getBalance() - loanamount);
 				loanamount = 0.0;
 				System.out.println("还贷成功。账户剩余金额为:" + getBalance());
-				//还贷的钱大于账户余额，透支
 			} else if (payLoanmoney > getBalance() &&  payLoanmoney <= ceilable){
-				System.out.println("还贷成功。账户余额为:0。透支金额为:" + (loanamount - getBalance()));
-				setCeiled(getCeiled() + loanamount -getBalance());
+				//还贷的钱大于账户余额，透支(账户原来有钱)
+				//还完之后，无论输入还款多少，还的其实都是贷款的数额，因为处在还完的分支下
+				setCeiled(loanamount - getBalance() + getCeiled());
+				System.out.println("还贷成功。账户余额为:0。透支金额为:" + getCeiled());
 				setBalance(0.0);
 				loanamount = 0.0;
-				//还贷的钱大于账户余额，大于最大透支额度
 			} else {
+				//还贷的钱大于账户余额，大于最大透支额度
 				System.out.println("还贷失败，账户余额不足并且大于最大可透支额度");
 			}
 		}
