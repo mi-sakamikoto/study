@@ -5,7 +5,7 @@ public interface Loan {
 	 * 贷款
 	 * @param requsetLoanMonet 贷款金额
 	 */
-	void requsetLoan(double requsetLoanMonet);
+	void requsetLoan (double requsetLoanMonet);
 
 	/**
 	 * 还贷

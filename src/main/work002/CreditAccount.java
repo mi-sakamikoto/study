@@ -30,15 +30,6 @@ public class CreditAccount extends Account {
 	}
 
 	/**
-	 * 管理员构造
-	 * @param id 管理员id
-	 * @param password 管理员密码
-	 */
-	public CreditAccount(long id, String password) {
-		super(id, password);
-	}
-
-	/**
 	 * @inheritDoc
 	 */
 	@Override

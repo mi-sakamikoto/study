@@ -44,7 +44,7 @@ public class LoanCreditAccount extends CreditAccount implements Loan {
 				//判断还的钱是否大于账户余额
 				setBalance(getBalance() - payLoanmoney);
 				loanamount = amountMoney;
-				System.out.println("还贷成功，剩余贷款为:" + loanamount + "。账户剩余金额为:" + getBalance());
+				System.out.println("还贷成功，剩余贷款为:" + loanamount + "。账户剩余金额为:" + getBalance() + "透支金额为:" + getCeiled());//余额有没有钱跟透支没关系
 			} else if (payLoanmoney >= getBalance() &&  (payLoanmoney-getBalance()) <= ceilable){
 				//还贷的钱大于账户余额，透支
 				loanamount = amountMoney;
@@ -61,8 +61,8 @@ public class LoanCreditAccount extends CreditAccount implements Loan {
 				//判断还的钱是否大于账户余额
 				setBalance(getBalance() - loanamount);
 				loanamount = 0.0;
-				System.out.println("还贷成功。账户剩余金额为:" + getBalance());
-			} else if (payLoanmoney > getBalance() &&  payLoanmoney <= ceilable){
+				System.out.println("还贷成功。账户剩余金额为:" + getBalance() + "透支金额为:" + getCeiled());//余额有没有钱跟透支没关系
+			} else if (loanamount > getBalance() && loanamount <= ceilable){
 				//还贷的钱大于账户余额，透支(账户原来有钱)
 				//还完之后，无论输入还款多少，还的其实都是贷款的数额，因为处在还完的分支下
 				setCeiled(loanamount - getBalance() + getCeiled());
@@ -90,3 +90,5 @@ public class LoanCreditAccount extends CreditAccount implements Loan {
 		this.loanamount = loanamount;
 	}
 }
+
+

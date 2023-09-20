@@ -22,7 +22,14 @@ public class SavingAccount extends Account {
 		super(password, name, personId);
 	}
 
-
+	/**
+	 * 管理员构造
+	 * @param id 管理员id
+	 * @param password 管理员密码
+	 */
+	public SavingAccount(long id,String password){
+		super(id,password);
+	}
 
 	/**
 	 * 取款
