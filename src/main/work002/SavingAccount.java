@@ -1,5 +1,7 @@
 package work002;
 
+import work002.Exception.BalanceNotEnoughException;
+
 /**
  * 储蓄账户类
  *
@@ -35,14 +37,15 @@ public class SavingAccount extends Account {
 	 * 取款
 	 *
 	 */
-	public void withdraw(double withdrawNum) {
+	public void withdraw(double withdrawNum) throws BalanceNotEnoughException {
 		double money = getBalance() - withdrawNum;
 		//判断余额是否大于0
 		if (money >= 0) {
 			setBalance(money);
 			System.out.println("取款成功,余额为:" + getBalance());
 		} else {
-			System.out.println("余额不足，余额为:" + getBalance());
+			//System.out.println("余额不足，余额为:" + getBalance());
+			throw new BalanceNotEnoughException("余额不足");
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package work002;
 
+import work002.Exception.BalanceNotEnoughException;
+
 /**
  * 账户类
  *
@@ -73,7 +75,7 @@ public abstract class Account {
 	 *
 	 * @param withdrawNum 取款金额
 	 */
-	public abstract void withdraw(double withdrawNum);
+	public abstract void withdraw(double withdrawNum) throws BalanceNotEnoughException;
 
 	public long getId() {
 		return id;

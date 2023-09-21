@@ -1,5 +1,7 @@
 package work002;
 
+import work002.Exception.BalanceNotEnoughException;
+
 /**
  * 信用账户类
  *
@@ -33,7 +35,7 @@ public class CreditAccount extends Account {
 	 * @inheritDoc
 	 */
 	@Override
-	public void withdraw(double withdrawNum) {
+	public void withdraw(double withdrawNum) throws BalanceNotEnoughException {
 		double ceilable = getCeiling() - getCeiled();
 		double money = getBalance() - withdrawNum;
 		//余额够用
@@ -52,7 +54,8 @@ public class CreditAccount extends Account {
 			}
 			//透支额度不够
 			else {
-				System.out.println("取款失败，超出可透支额度");
+				//System.out.println("取款失败，超出可透支额度");
+				throw new BalanceNotEnoughException("取款失败，超出可透支额度");
 			}
 		}
 	}

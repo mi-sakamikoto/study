@@ -1,5 +1,10 @@
 package work002;
 
+import work002.Exception.BalanceNotEnoughException;
+import work002.Exception.LoanException;
+import work002.Exception.LoginException;
+import work002.Exception.RegisterException;
+
 /**
  * 银行类
  *
@@ -32,11 +37,12 @@ public class Bank {
 	 * @param idType 账户类型
 	 * @return 用户账户
 	 */
-	public Account create(String password, String repassword, String name, String personId, int idType) {
+	public Account create(String password, String repassword, String name, String personId, int idType) throws RegisterException {
 		Account account = null;
 		//判断确认密码是否为空及是否正确
 		if ("".equals(repassword) || !repassword.equals(password)) {
-			System.out.println("确认密码错误,重新开户");
+			//System.out.println("确认密码错误,重新开户");
+			throw new RegisterException("确认密码错误,重新开户");
 		} else {
 			switch (idType) {
 				case 0:
@@ -81,7 +87,7 @@ public class Bank {
 	 *
 	 * @return Account对象
 	 */
-	public Account login(Long id, String password) {
+	public Account login(Long id, String password) throws LoginException {
 		Account account = null;
 		for (int i = 0; i < num; i++) {
 			//判断用户id与用户密码
@@ -91,7 +97,8 @@ public class Bank {
 			}
 		}
 		if (account == null) {
-			System.out.println("用户id或密码错误");
+			//System.out.println("用户id或密码错误");
+			throw new LoginException("用户id或密码错误");
 		}
 		return account;
 	}
@@ -113,12 +120,13 @@ public class Bank {
 	 * @param requsetLoanMonet 贷款金额
 	 * @return 执行完贷款的用户
 	 */
-	public Account adminrequsetLoan(long id, double requsetLoanMonet){
+	public Account adminrequsetLoan(long id, double requsetLoanMonet) throws LoanException {
 		Account account = null;
 		for (int i = 0;i < num; i++){
 			if (id == users[i].getId() && users[i] instanceof Loan){
 				//判断用户id及是否为贷款用户
-				((Loan)account).requsetLoan(requsetLoanMonet);
+				account = users[i];
+					((Loan)account).requsetLoan(requsetLoanMonet);
 			} else {
 				System.out.println("用户不存在");
 			}
@@ -133,15 +141,18 @@ public class Bank {
 	 * @param payLoanmoney 还贷金额
 	 * @return 执行完还贷的用户
 	 */
-	public Account adminpayLoan(long id,double payLoanmoney){
+	public Account adminpayLoan(long id,double payLoanmoney) throws BalanceNotEnoughException {
 		Account account = null;
 		for (int i = 0;i < num; i++){
 			if (id == users[i].getId() && users[i] instanceof LoanSavingAccount){
 				//判断用户id及是否为储蓄贷款用户
+				account = users[i];
 				((Loan)account).payLoan(payLoanmoney);
 			} else if (id == users[i].getId() && users[i] instanceof LoanCreditAccount) {
 				//判断用户id及是否为信用贷款用户
+				account = users[i];
 				((Loan)account).payLoan(payLoanmoney);
+
 			} else {
 				System.out.println("用户不存在");
 			}
@@ -229,6 +240,7 @@ public class Bank {
 		for (int i = 0; i < num; i++){
 			//判断用户id及是否为信用贷款用户
 			if (id == users[i].getId() && users[i] instanceof CreditAccount){
+				account = users[i];
 				((CreditAccount)account).payCeil(amount);
 			}
 		}

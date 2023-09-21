@@ -1,5 +1,10 @@
 package work002;
 
+import work002.Exception.BalanceNotEnoughException;
+import work002.Exception.LoanException;
+import work002.Exception.LoginException;
+import work002.Exception.RegisterException;
+
 import java.util.Scanner;
 
 public class Menu {
@@ -32,7 +37,12 @@ public class Menu {
 					System.out.println("账户类型:0-储蓄账户 1-信用账户 2-可贷款储蓄帐号 3-可贷款信用账户");
 					Scanner sci = new Scanner(System.in);
 					int idType = sci.nextInt();
-					Account acc = bank.create(password, repassword, name, personId, idType);
+					Account acc = null;
+					try {
+						acc = bank.create(password, repassword, name, personId, idType);
+					} catch (RegisterException e) {
+						System.out.println(e.getMessage());
+					}
 					if (acc != null) {
 						System.out.println("欢迎" + acc.getName() + ",开户成功, 账户号码:" + acc.getId());
 					} else {
@@ -47,7 +57,12 @@ public class Menu {
 					Long id = s.nextLong();
 					System.out.println("请输入账户密码:");
 					String password2 = sc.nextLine();
-					Account account = bank.login(id, password2);
+					Account account = null;
+					try {
+						account = bank.login(id, password2);
+					} catch (LoginException e) {
+						System.out.println(e.getMessage());
+					}
 					if (account != null) {
 						System.out.println("欢迎" + account.getName() + ",账户号码:" + account.getId());
 						menu2(account);
@@ -143,7 +158,11 @@ public class Menu {
 					System.out.println("请输入取款数额:");
 					Scanner sc3 = new Scanner(System.in);
 					double withdrawNum = sc3.nextDouble();
-					account.withdraw(withdrawNum);
+					try {
+						account.withdraw(withdrawNum);
+					} catch (BalanceNotEnoughException e) {
+						System.out.println(e.getMessage());
+					}
 
 					break;
 				case "e":
@@ -165,7 +184,11 @@ public class Menu {
 					System.out.println("请输入贷款金额:");
 					Scanner sc5 = new Scanner(System.in);
 					double requsetLoanMonet = sc5.nextDouble();
-					((Loan)account).requsetLoan(requsetLoanMonet);
+					try {
+						((Loan)account).requsetLoan(requsetLoanMonet);
+					} catch (LoanException e) {
+						throw new RuntimeException(e);
+					}
 					/*if (((LoanSavingAccount) account) instanceof Account) {
 						((LoanSavingAccount) account).requsetLoan(requsetLoanMonet);
 					}*/
@@ -176,11 +199,19 @@ public class Menu {
 					Scanner sc6 = new Scanner(System.in);
 					if (account instanceof LoanSavingAccount){
 						double payLoanmoney = sc6.nextDouble();
-						((Loan)account).payLoan(payLoanmoney);
+						try {
+							((Loan)account).payLoan(payLoanmoney);
+						} catch (BalanceNotEnoughException e) {
+							System.out.println(e.getMessage());
+						}
 					}
 					else {
 						double payLoanmoney2 = sc6.nextDouble();
-						((Loan)account).payLoan(payLoanmoney2);
+						try {
+							((Loan)account).payLoan(payLoanmoney2);
+						} catch (BalanceNotEnoughException e) {
+							System.out.println(e.getMessage());
+						}
 					}
 					/*if (((LoanSavingAccount) account) instanceof Account) {
 						((LoanSavingAccount) account).payLoan(payLoanmoney);
@@ -254,7 +285,11 @@ public class Menu {
 					long id = s.nextLong();
 					System.out.println("请输出入贷款金额:");
 					double requsetLoanMonet = s1.nextDouble();
-					bank.adminrequsetLoan(id,requsetLoanMonet);
+					try {
+						bank.adminrequsetLoan(id,requsetLoanMonet);
+					} catch (LoanException e) {
+						throw new RuntimeException(e);
+					}
 
 					break;
 				case "b":
@@ -263,22 +298,26 @@ public class Menu {
 					long id2 = s.nextLong();
 					System.out.println("请输出入还贷金额:");
 					double payLoanmoney = s1.nextDouble();
-					bank.adminpayLoan(id2,payLoanmoney);
+					try {
+						bank.adminpayLoan(id2,payLoanmoney);
+					} catch (BalanceNotEnoughException e) {
+						throw new RuntimeException(e);
+					}
 
 					break;
 				case "c":
 					//计算所有用户的余额
-					bank.count();
+					System.out.println("所有账户余额为:" + bank.count());
 
 					break;
 				case "d":
 					//计算所有贷款金额
-					bank.countLoan();
+					System.out.println("所有账户贷款金额为:" + bank.countLoan());
 
 					break;
 				case "e":
 					//计算所有透支金额
-					bank.countceiled();
+					System.out.println("所有账户透支金额为:" + bank.countceiled());
 
 					break;
 				case "f":
